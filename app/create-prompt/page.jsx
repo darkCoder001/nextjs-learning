@@ -5,8 +5,11 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 
 import Form from "@components/Form";
+import { useRouter } from 'next/navigation';
 
 const CreatePrompt = () => {
+    const router=useRouter();
+    const {data:session}=useSession();
     const [submitting, setSubmitting]= useState(false);
     const [post, setPost]= useState({ prompt:"", tag:""});
 
@@ -21,9 +24,9 @@ const CreatePrompt = () => {
             userId:session?.user.id,
             tag:post.tag
           })
-        })
+        });
         if(res.ok){
-          Router.push('/');
+          router.push('/');
         }
       } catch (error) {
         console.log(error);
